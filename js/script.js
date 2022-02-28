@@ -19,7 +19,7 @@ const divide = function (a, b) {
   return a / b;
 };
 
-const operate = function (operator, number1, number2) {
+const operate = function (number1, operator, number2) {
   switch (operator) {
     case "+":
       return add(number1, number2);
@@ -27,7 +27,7 @@ const operate = function (operator, number1, number2) {
     case "-":
       return subtract(number1, number2);
       break;
-    case "*":
+    case "x":
       return multiply(number1, number2);
       break;
     case "/":
@@ -42,15 +42,23 @@ let firstNumber;
 let secondNumber;
 let operator = "";
 
+const storeNumbers = function (e) {
+  displayValue += e.target.textContent;
+  inputScreen.textContent = displayValue;
+};
+
+const storeOperations = function (e) {
+  firstNumber = parseFloat(displayValue);
+  operator = e.target.textContent;
+  displayValue = "";
+};
+
 const displayValuesOnScreen = function () {
   buttons.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-number")) {
-      displayValue += e.target.textContent;
-      inputScreen.textContent = displayValue;
+      storeNumbers(e);
     } else if (e.target.classList.contains("btn-operator")) {
-      firstNumber = parseFloat(displayValue);
-      operator = e.target.textContent;
-      displayValue = "";
+      storeOperations(e);
     }
   });
 };
@@ -59,7 +67,7 @@ displayValuesOnScreen();
 
 equalsBtn.addEventListener("click", function () {
   secondNumber = parseFloat(displayValue);
-  const answer = operate(operator, firstNumber, secondNumber);
+  const answer = operate(firstNumber, operator, secondNumber);
   displayValue = answer;
   answerScreen.textContent = answer;
 });
