@@ -19,4 +19,6 @@ when a user clicks a operator and operand, it is stored. however, the equals but
 
 ## Problem Encountered
 
-I was stuck with the inability to perform multiple operations for a while. It took me for days.
+I was stuck with the inability to perform multiple operations for a while. It took me four days.
+
+live at https://chris1-web.github.io/calculator/
