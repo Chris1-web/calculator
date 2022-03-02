@@ -51,7 +51,6 @@ let dot;
 const storeNumbers = function (e) {
   /* if there is no operator, the number would be recorded in the first Number string. 
   However, if there is already an operator, the numbers would be saved in second number string */
-
   if (operator === "") {
     firstNumber += e.target.textContent;
   } else {
@@ -72,6 +71,16 @@ const storeOperations = function (e) {
   }
   // for multiple steps mostly
   else {
+    if (secondNumber === "") {
+      //if another operation is clicked instead of secondNumber, go ahead and replace the operator with the new one.
+      operator = "";
+      operator = e.target.textContent;
+      displayValue = displayValue.slice(0, -1);
+      displayValue += operator;
+      return;
+    }
+    console.log("we here");
+    console.log(firstNumber, secondNumber);
     firstValue = parseFloat(firstNumber);
     secondValue = parseFloat(secondNumber);
     answer = operate(firstValue, operator, secondValue);
