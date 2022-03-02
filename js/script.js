@@ -2,6 +2,8 @@ const buttons = document.querySelector(".calculator-buttons");
 const inputScreen = document.querySelector(".bottom-screen");
 const answerScreen = document.querySelector(".top-screen");
 const equalsBtn = document.querySelector(".btn-equal");
+const clearBtn = document.querySelector(".btn-clear");
+const backBtn = document.querySelector(".btn-back");
 
 const add = function (a, b) {
   return a + b;
@@ -43,10 +45,13 @@ let operator = "";
 let answer;
 let firstValue; //converted firstNumber( from string to number )
 let secondValue; //converted secondNumber( from string to number )
+let displayedAnswer;
+let dot;
 
 const storeNumbers = function (e) {
   /* if there is no operator, the number would be recorded in the first Number string. 
   However, if there is already an operator, the numbers would be saved in second number string */
+
   if (operator === "") {
     firstNumber += e.target.textContent;
   } else {
@@ -61,7 +66,7 @@ const storeOperations = function (e) {
   if there is already an operator, there is a need to get the first number, second number 
   and perform the needed operation, then the new answer is given back as the new first number, 
   the original operator is removed, the initial second number is also removed, 
-  and the newly clicked operator is given as the new operator   */
+  and the newly clicked operator is given as the new operator */
   if (operator === "") {
     operator = e.target.textContent;
   }
@@ -93,7 +98,44 @@ displayValuesOnScreen();
 equalsBtn.addEventListener("click", function () {
   firstValue = parseFloat(firstNumber);
   secondValue = parseFloat(secondNumber);
-  console.log(firstValue, operator, secondValue);
+  if (firstValue === undefined || secondValue === undefined) return;
   answer = operate(firstValue, operator, secondValue);
+  if (answer === Infinity) {
+    answer = "🤡";
+  }
+
+  if (answer % 1 !== 0) {
+    answer = answer.toFixed(2);
+  }
+
   answerScreen.textContent = answer;
+});
+
+clearBtn.addEventListener("click", function (e) {
+  firstNumber = "";
+  secondNumber = "";
+  operator = "";
+  displayValue = "";
+  firstValue = "";
+  secondValue = "";
+  answerScreen.textContent = displayValue;
+  inputScreen.textContent = displayValue;
+});
+
+backBtn.addEventListener("click", function () {
+  if (operator === "" && secondNumber === "") {
+    firstNumber = firstNumber.slice(0, -1);
+    displayValue = firstNumber;
+    inputScreen.textContent = displayValue;
+  } else if (operator !== "") {
+    displayValue = displayValue.replace(secondNumber, "");
+    secondNumber = secondNumber.slice(0, -1);
+    displayValue += secondNumber;
+    inputScreen.textContent = displayValue;
+  }
+  if (displayValue.slice(-1) === operator) {
+    operator = "";
+    displayValue = firstNumber;
+    inputScreen.textContent = displayValue;
+  }
 });
