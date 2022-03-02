@@ -101,7 +101,9 @@ equalsBtn.addEventListener("click", function () {
   if (firstValue === undefined || secondValue === undefined) return;
   answer = operate(firstValue, operator, secondValue);
   if (answer === Infinity) {
-    answer = "🤡";
+    answer = "ERROR";
+    answerScreen.textContent = answer;
+    return;
   }
 
   if (answer % 1 !== 0) {
