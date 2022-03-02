@@ -100,7 +100,7 @@ equalsBtn.addEventListener("click", function () {
   secondValue = parseFloat(secondNumber);
   if (firstValue === undefined || secondValue === undefined) return;
   answer = operate(firstValue, operator, secondValue);
-  if (answer === Infinity) {
+  if (answer === Infinity || Number.isNaN(answer)) {
     answer = "ERROR";
     answerScreen.textContent = answer;
     return;
